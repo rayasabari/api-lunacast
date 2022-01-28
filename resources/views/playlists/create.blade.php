@@ -4,7 +4,9 @@
   </x-slot>
   <div class="p-5">
     <x-breadcrumb>
-      <x-slot name="title">Playlists</x-slot>
+      <x-slot name="title">
+        <a href="{{ route('playlists.index') }}">Playlists</a>
+      </x-slot>
       Create
     </x-breadcrumb>
     <x-card>
