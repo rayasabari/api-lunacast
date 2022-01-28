@@ -1,13 +1,11 @@
 @props(['disabled' => false])
 
 <input {{ $disabled ? 'disabled' : '' }} {!! $attributes->merge([
-    'class' => 'form-control block w-full px-2
-py-1.5
+'class' => 'block w-full mt-1
 text-md
 font-normal
 text-gray-400
 bg-white bg-clip-padding
-border border-solid border-gray-100
 rounded
 transition
 ease-in-out

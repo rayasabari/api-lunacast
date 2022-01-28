@@ -14,6 +14,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('playlists')->middleware('permission:create playlists')->group(function () {
         Route::get('/create', [PlaylistController::class, 'create'])->name('playlists.create');
         Route::post('/create', [PlaylistController::class, 'store']);
+        Route::get('/{playlist:slug}/edit', [PlaylistController::class, 'edit'])->name('playlists.edit');
+        Route::put('/{playlist:slug}/edit', [PlaylistController::class, 'update']);
         Route::get('/index', [PlaylistController::class, 'index'])->name('playlists.index');
     });
 });

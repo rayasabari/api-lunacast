@@ -7,8 +7,13 @@
       <x-slot name="title">Playlists</x-slot>
       Create
     </x-breadcrumb>
-    <form action="{{ route('playlists.create') }}" method="post" novalidate enctype="multipart/form-data">
-      @include('playlists._form-control', ['submit' => 'Create'])
-    </form>
+    <x-card>
+      <x-slot name="header">
+        New Playlist
+      </x-slot>
+      <form action="{{ route('playlists.create') }}" method="post" novalidate enctype="multipart/form-data">
+        @include('playlists._form-control', ['submit' => 'Create'])
+      </form>
+    </x-card>
   </div>
 </x-app-layout>

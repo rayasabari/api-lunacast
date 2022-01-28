@@ -9,21 +9,23 @@
 		</x-breadcrumb>
 		<x-table>
 			<thead>
-				<tr class="bg-white">
+				<x-tr>
 					<x-th class="text-center" width="5%">#</x-th>
 					<x-th>Name</x-th>
 					<x-th>Published</x-th>
-					<x-th>Action</x-th>
-				</tr>
+					<x-th class="text-center">Action</x-th>
+				</x-tr>
 			</thead>
 			<tbody>
 				@foreach ($playlists as $key => $playlist)
-				<tr class="{{ ($key + 1) % 2 == 0 ? 'bg-white' : 'bg-gray-50' }} hover:bg-gray-600 hover:text-gray-50 transition duration-300">
+				<x-tr>
 					<x-td class="text-center">{{ $playlists->count() * ($playlists->currentPage() - 1) + $loop->iteration}}</x-td>
 					<x-td>{{ $playlist->name }}</x-td>
-					<x-td>{{ $playlist->created_at->diffForHumans() }}</x-td>
-					<x-td>Edit</x-td>
-				</tr>
+					<x-td><span class="text-gray-400">{{ $playlist->created_at->diffForHumans() }}</span></x-td>
+					<x-td class="text-center">
+						<a href="{{ route('playlists.edit', $playlist->slug) }}" class="text-indigo-500">Edit</a>
+					</x-td>
+				</x-tr>
 				@endforeach
 			</tbody>
 		</x-table>
