@@ -60,4 +60,9 @@ class PlaylistController extends Controller
 
         return redirect(route('playlists.index'));
     }
+
+    public function destroy(Playlist $playlist)
+    {
+        dd($playlist);
+    }
 }
