@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Lunacast;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PlaylistRequest;
 use App\Models\Lunacast\Playlist;
+use App\Models\Lunacast\Tag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -14,19 +15,22 @@ class PlaylistController extends Controller
     public function create()
     {
         return view('playlists.create', [
-            'playlist' => new Playlist()
+            'playlist' => new Playlist(),
+            'tags' => Tag::get(),
         ]);
     }
 
     public function store(PlaylistRequest $request)
     {
-        Auth::user()->playlists()->create([
+        $playlist = Auth::user()->playlists()->create([
             'thumbnail' => $request->file('thumbnail')->store('images/playlist '),
             'name' => $request->name,
             'slug' => Str::slug($request->name . '-' . Str::random(5)),
             'description' => $request->description,
             'price' => $request->price,
         ]);
+
+        $playlist->tags()->sync(request('tags'));
 
         return back();
     }
@@ -40,7 +44,10 @@ class PlaylistController extends Controller
 
     public function edit(Playlist $playlist)
     {
-        return view('playlists.edit', ['playlist' => $playlist]);
+        return view('playlists.edit', [
+            'playlist' => $playlist,
+            'tags' => Tag::get(),
+        ]);
     }
 
     public function update(PlaylistRequest $request, Playlist $playlist)
@@ -58,11 +65,17 @@ class PlaylistController extends Controller
             'price' => $request->price,
         ]);
 
+        $playlist->tags()->sync(request('tags'));
+
         return redirect(route('playlists.index'));
     }
 
     public function destroy(Playlist $playlist)
     {
-        dd($playlist);
+        // Storage::delete($playlist->);
+        $playlist->tags()->detach();
+        $playlist->delete();
+
+        return redirect(route('playlists.index'));
     }
 }

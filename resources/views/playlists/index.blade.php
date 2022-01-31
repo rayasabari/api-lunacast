@@ -22,28 +22,36 @@
         <x-tr>
           <x-td class="text-center">
             {{ $playlists->count() * ($playlists->currentPage() - 1) + $loop->iteration }}</x-td>
-          <x-td>{{ $playlist->name }}</x-td>
+          <x-td>{{ $playlist->name }}
+            <div class="mt-1">
+              @foreach ($playlist->tags as $tag)
+              <span class="px-2 py-1 text-xs font-bold text-yellow-600 bg-yellow-300 rounded-full">{{ $tag->name }}</span>
+              @endforeach
+            </div>
+          </x-td>
           <x-td class="text-right">{{ number_format($playlist->price, 0, ',', '.') }}</x-td>
           <x-td class="text-center"><span class="text-gray-400">{{ $playlist->created_at->diffForHumans() }}</span></x-td>
-          <x-td class="flex justify-center space-x-2">
-            <a href="{{ route('playlists.edit', $playlist->slug) }}" class="text-indigo-500">Edit</a>
-            <div x-data="{openModal: false}">
-              <x-modal x-show="openModal" state="openModal" title="Delete Confirmation">
-                Are you sure to delete {{ $playlist->name }} playlist?
-                <div class="flex justify-end mt-6">
-                  <div class="flex space-x-2">
-                    <form action="{{ route('playlists.delete', $playlist->slug) }}" method="post">
-                      @csrf
-                      @method('delete')
-                      <x-button class="bg-gray-400 hover:bg-gray-500">Yes</x-button>
-                    </form>
-                    <x-button @click="openModal = false" type="button">Cancel</x-button>
+          <x-td>
+            <div class="flex items-center justify-center space-x-2">
+              <a href="{{ route('playlists.edit', $playlist->slug) }}" class="text-indigo-500">Edit</a>
+              <div x-data="{openModal: false}">
+                <x-modal x-show="openModal" state="openModal" title="Delete Confirmation">
+                  Are you sure to delete {{ $playlist->name }} playlist?
+                  <div class="flex justify-end mt-6">
+                    <div class="flex space-x-2">
+                      <form action="{{ route('playlists.delete', $playlist->slug) }}" method="post">
+                        @csrf
+                        @method('delete')
+                        <x-button class="bg-gray-400 hover:bg-gray-500">Yes</x-button>
+                      </form>
+                      <x-button @click="openModal = false" type="button">Cancel</x-button>
+                    </div>
                   </div>
-                </div>
-              </x-modal>
-              <button @click="openModal = true" class="text-rose-600 focus:outline-none">
-                Delete
-              </button>
+                </x-modal>
+                <button @click="openModal = true" class="text-rose-600 focus:outline-none">
+                  Delete
+                </button>
+              </div>
             </div>
           </x-td>
         </x-tr>
