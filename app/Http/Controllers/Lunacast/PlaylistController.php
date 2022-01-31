@@ -72,7 +72,7 @@ class PlaylistController extends Controller
 
     public function destroy(Playlist $playlist)
     {
-        // Storage::delete($playlist->);
+        Storage::delete($playlist->thumbnail);
         $playlist->tags()->detach();
         $playlist->delete();
 
