@@ -30,7 +30,7 @@
 	<x-label for="tags" value="" Tags" />
 	<select multiple name="tags[]" id="tags" class="w-full text-gray-500 border-gray-200 rounded-md focus:border-indigo-100 focus:ring focus:ring-indigo-100 focus:ring-opacity-50">
 		@foreach ($tags as $tag)
-		<option value="{{ $tag->id }}">{{ $tag->name }}</option>
+		<option {{ $playlist->tags()->find($tag->id) ? 'selected' : '' }} value="{{ $tag->id }}">{{ $tag->name }}</option>
 		@endforeach
 	</select>
 	@error('description')
