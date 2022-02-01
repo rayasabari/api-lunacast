@@ -18,9 +18,10 @@ class CreateVideosTable extends Migration
             $table->foreignId('playlist_id');
             $table->string('title');
             $table->string('slug');
-            $table->string('source');
+            $table->string('unique_video_id');
             $table->integer('episode');
             $table->string('runtime');
+            $table->boolean('intro')->default(false);
             $table->timestamps();
         });
     }

@@ -17,6 +17,8 @@ class PlaylistController extends Controller
         return view('playlists.create', [
             'playlist' => new Playlist(),
             'tags' => Tag::get(),
+            'title' => 'Playlist Index',
+            'breadcrumb' => ['Playlist', 'Index']
         ]);
     }
 
@@ -39,7 +41,11 @@ class PlaylistController extends Controller
     {
         $playlists = Auth::user()->playlists()->latest()->paginate(10);
 
-        return view('playlists.index', compact('playlists'));
+        return view('playlists.index', [
+            'playlists' => $playlists,
+            'title' => 'Playlist Index',
+            'breadcrumb' => ['Playlist', 'Index']
+        ]);
     }
 
     public function edit(Playlist $playlist)
