@@ -54,6 +54,8 @@ class PlaylistController extends Controller
         return view('playlists.edit', [
             'playlist' => $playlist,
             'tags' => Tag::get(),
+            'title' => 'Playlist Edit',
+            'breadcrumb' => ['Playlist', 'Edit']
         ]);
     }
 

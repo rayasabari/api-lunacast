@@ -23,7 +23,11 @@
           <x-td class="text-center">
             {{ ($videos ->currentPage()-1) * $videos->perPage() + $loop->index + 1}}</x-td>
           <x-td>{{ $video->title }}</x-td>
-          <x-td class="text-center">Edit</x-td>
+          <x-td>
+            <div class="flex items-center justify-center">
+              <a href="{{ route('videos.edit', $video->slug) }}" class="text-indigo-600 hover:text-indigo-700 hover:underline">Edit</a>
+            </div>
+          </x-td>
         </x-tr>
         @endforeach
       </tbody>

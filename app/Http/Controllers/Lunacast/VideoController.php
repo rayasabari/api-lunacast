@@ -48,4 +48,14 @@ class VideoController extends Controller
 
         return back();
     }
+
+    public function edit(Video $video)
+    {
+        // $this->authorize('update', $playlist);
+        return view('videos.edit', [
+            'video' => $video,
+            'title' => 'Edit Video',
+            'breadcrumb' => ['Playlist', 'Videos', 'Edit']
+        ]);
+    }
 }

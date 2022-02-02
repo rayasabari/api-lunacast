@@ -37,9 +37,11 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('videos')->middleware('permission:create playlists')->group(function () {
-        Route::get('index/{playlist:slug}', [VideoController::class, 'index'])->name('videos.index');
-        Route::get('create/into/{playlist:slug}', [VideoController::class, 'create'])->name('videos.create');
-        Route::post('create/into/{playlist:slug}', [VideoController::class, 'store']);
+        Route::get('/index/{playlist:slug}', [VideoController::class, 'index'])->name('videos.index');
+        Route::get('/create/into/{playlist:slug}', [VideoController::class, 'create'])->name('videos.create');
+        Route::post('/create/into/{playlist:slug}', [VideoController::class, 'store']);
+        Route::get('/{video:slug}/edit', [VideoController::class, 'edit'])->name('videos.edit');
+        Route::put('/{video:slug}/edit', [VideoController::class, 'edit']);
     });
 });
 
