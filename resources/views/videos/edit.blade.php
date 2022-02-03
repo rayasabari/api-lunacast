@@ -13,7 +13,7 @@
       <x-slot name="header">
         Edit Video: {{ $video->title }}
       </x-slot>
-      <form action="{{ route('videos.edit', $video->slug) }}" method="post" novalidate enctype="multipart/form-data">
+      <form action="{{ route('videos.edit', [$playlist->slug, $video->unique_video_id]) }}" method="post" novalidate enctype="multipart/form-data">
         @method('put')
         @include('videos._form-control', ['submit' => 'Update'])
       </form>

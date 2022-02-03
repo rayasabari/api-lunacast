@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Lunacast;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PlaylistRequest;
+use App\Http\Resources\Lunacast\PlaylistResource;
 use App\Models\Lunacast\Playlist;
 use App\Models\Lunacast\Tag;
 use Illuminate\Support\Facades\Auth;
@@ -88,5 +89,19 @@ class PlaylistController extends Controller
         $playlist->delete();
 
         return redirect(route('playlists.index'));
+    }
+
+    public function getPlaylists(Playlist $playlist)
+    {
+        $data = $playlist
+            ->with('user')
+            ->latest()
+            ->paginate(10);
+        return PlaylistResource::collection($data);
+    }
+
+    public function showPlaylist(Playlist $playlist)
+    {
+        return new PlaylistResource($playlist);
     }
 }

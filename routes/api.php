@@ -1,19 +1,18 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Auth\MeController;
+use App\Http\Controllers\Lunacast\PlaylistController;
+use App\Http\Controllers\Lunacast\VideoController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+Route::prefix('playlists')->group(function () {
+    Route::get('', [PlaylistController::class, 'getPlaylists']);
+    Route::get('/{playlist:slug}', [PlaylistController::class, 'showPlaylist']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    Route::get('/{playlist:slug}/videos',[VideoController::class, 'getVideos']);
+    Route::get('/{playlist:slug}/episode/{video:episode}',[VideoController::class, 'showVideo']);
+});
+
+Route::middleware('auth:sanctum')->group(function (){
+    Route::get('/me', MeController::class);
 });

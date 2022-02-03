@@ -24,8 +24,26 @@
             {{ ($videos ->currentPage()-1) * $videos->perPage() + $loop->index + 1}}</x-td>
           <x-td>{{ $video->title }}</x-td>
           <x-td>
-            <div class="flex items-center justify-center">
-              <a href="{{ route('videos.edit', $video->slug) }}" class="text-indigo-600 hover:text-indigo-700 hover:underline">Edit</a>
+            <div class="flex items-center justify-center space-x-2">
+              <a href="{{ route('videos.edit', [$playlist->slug, $video->unique_video_id]) }}" class="text-indigo-600 hover:text-indigo-700 hover:underline">Edit</a>
+              <div x-data="{openModal: false}">
+                <x-modal x-show="openModal" state="openModal" title="Delete Confirmation">
+                  Are you sure to delete <span class="font-semibold">{{ $video->title }}</span>?
+                  <div class="flex justify-end mt-6">
+                    <div class="flex space-x-2">
+                      <form action="{{ route('videos.delete', [$playlist->slug, $video->unique_video_id]) }}" method="post">
+                        @csrf
+                        @method('delete')
+                        <x-button class="bg-gray-400 hover:bg-gray-500">Yes</x-button>
+                      </form>
+                      <x-button @click="openModal = false" type="button">Cancel</x-button>
+                    </div>
+                  </div>
+                </x-modal>
+                <button @click="openModal = true" class="text-rose-600 focus:outline-none">
+                  Delete
+                </button>
+              </div>
             </div>
           </x-td>
         </x-tr>

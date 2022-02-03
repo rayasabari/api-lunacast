@@ -33,7 +33,7 @@
 
 <div class="w-1/12 mb-5">
   <label for="intro" class="flex items-center">
-    <input type="checkbox" name="intro" id="intro" class="mr-2 border-gray-300 rounded bg-indigo-50 focus:outline-none focus:ring-0">
+    <input type="checkbox" {{ $video->intro ? 'checked' : '' }} name="intro" id="intro" class="mr-2 border-gray-300 rounded bg-indigo-50 focus:outline-none focus:ring-0">
     <span class="text-sm uppercase select-none">Intro</span>
   </label>
 </div>
