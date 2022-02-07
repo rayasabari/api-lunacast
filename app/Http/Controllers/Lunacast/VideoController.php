@@ -8,6 +8,7 @@ use App\Http\Resources\Lunacast\VideoResource;
 use App\Models\Lunacast\Playlist;
 use App\Models\Lunacast\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class VideoController extends Controller
@@ -78,12 +79,16 @@ class VideoController extends Controller
 
     public function getVideos(Playlist $playlist, Video $video)
     {
-        $data = $playlist->videos()->orderBy('episode','ASC')->get();
+        $data = $playlist->videos()->orderBy('episode', 'ASC')->get();
         return new VideoResource($data);
     }
 
     public function showVideo(Playlist $playlist, Video $video)
     {
-        return new VideoResource($video);
+        if (Auth::user()->hasBought($playlist) || $video->intro == 1) {
+            return new VideoResource($video);
+        }
+
+        return ['message' => 'You must buy playlist before watching!'];
     }
 }
